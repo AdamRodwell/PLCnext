@@ -34,7 +34,8 @@
         "aaron-bond.better-comments",
         "ms-azuretools.vscode-docker",
         "dillonkearns.vscode-gtest-adapter",
-        "GitHub.vscode-pull-request-github"
+        "GitHub.vscode-pull-request-github",
+        "anthropic.claude-code"
       ]
     }
   },

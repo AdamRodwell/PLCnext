@@ -1,0 +1,10 @@
+services:
+  dev:
+    image: ghcr.io/adamrodwell/plc-next-ghcr:2024
+    volumes:
+      - .:/workspace:cached
+      - ~/.claude:/home/plc/.claude
+    command: sleep infinity
+    environment:
+      - SHELL=/bin/zsh
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}

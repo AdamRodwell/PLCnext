@@ -1,1 +1,0 @@
-FROM ghcr.io/adamrodwell/plc-next-ghcr:2024

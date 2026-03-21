@@ -1,6 +1,12 @@
 {
   "name": "PLCNext Dev Container",
-  "image": "ghcr.io/cyberflaneurx/plc-next-ghcr:latest",
+  "image": "ghcr.io/adamrodwell/plc-next-ghcr:2024",
+  "mounts": [
+    "source=${localEnv:HOME}/.claude,target=/home/plc/.claude,type=bind,consistency=cached"
+  ],
+  "containerEnv": {
+    "ANTHROPIC_API_KEY": "${localEnv:ANTHROPIC_API_KEY}"
+  },
   "customizations": {
     "vscode": {
       "settings": {
@@ -39,6 +45,7 @@
       ]
     }
   },
+  "postCreateCommand": "curl -fsSL https://deb.nodesource.com/setup_20.x | sudo bash - && sudo apt-get install -y nodejs && sudo npm install -g @anthropic-ai/claude-code",
   "remoteUser": "plc",
-  "workspaceFolder": "/workspace"
+  "workspaceFolder": "/workspaces/PLCnext"
 }

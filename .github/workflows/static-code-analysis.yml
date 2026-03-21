@@ -14,17 +14,21 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Authenticate Docker with GitHub Container Registry
-        run: docker login --username cyberflaneurx --password ${{ secrets.GH_PAT }} ghcr.io
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GH_PAT }}
 
       - name: Pull Docker image
-        run: docker pull ghcr.io/cyberflaneurx/plc-next-ghcr:latest
+        run: docker pull ghcr.io/adamrodwell/plc-next-ghcr:2024
 
       - name: Start Docker Container
         run: |
-          docker run -d --name plcnext_container -v $(pwd):/code -w /code ghcr.io/cyberflaneurx/plc-next-ghcr:latest sleep infinity
+          docker run -d --name plcnext_container -v $(pwd):/code -w /code ghcr.io/adamrodwell/plc-next-ghcr:2024 sleep infinity
 
       - name: Ensure Permissions Inside Container
         run: |

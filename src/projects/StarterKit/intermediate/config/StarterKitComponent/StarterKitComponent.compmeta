@@ -3,6 +3,7 @@
   <Component type="StarterKitComponent">
     <ProgramIncludes>
       <Include path="StarterKitProgram/StarterKitProgram.progmeta" />
+      <Include path="TemplateController/TemplateController.progmeta" />
     </ProgramIncludes>
     <Ports>
     </Ports>

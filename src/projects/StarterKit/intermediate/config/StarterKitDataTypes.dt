@@ -25,12 +25,73 @@ TYPE
 END_TYPE
 END_NAMESPACE
 
+NAMESPACE StarterKit.TemplateController
+TYPE
+    TemplateConfig : STRUCT
+        exampleTimeoutMs : UDINT;
+        examplePositionMm : REAL;
+        exampleIgnoreSensor : BOOL;
+    END_STRUCT
+END_TYPE
+END_NAMESPACE
+
+NAMESPACE StarterKit.TemplateController
+TYPE
+    TemplateData : STRUCT
+        isInitialisationDone : BOOL;
+        isCycleDone : BOOL;
+        cycleCount : UDINT;
+        currentState : StarterKit.TemplateController.TemplateControllerState;
+        error : StarterKit.TemplateControllerError;
+    END_STRUCT
+END_TYPE
+END_NAMESPACE
+
+NAMESPACE StarterKit
+TYPE
+    TemplateControllerError : STRUCT
+        warningExampleTimeout : BOOL;
+        warningExampleSensorFailed : BOOL;
+        errorExampleUnexpectedState : BOOL;
+        hasErrorSubSystem : BOOL;
+        hasWarningSubSystem : BOOL;
+    END_STRUCT
+END_TYPE
+END_NAMESPACE
+
+NAMESPACE StarterKit.TemplateController
+TYPE
+    TemplateCommand : STRUCT
+        disable : BOOL;
+        initialise : BOOL;
+        startCycle : BOOL;
+        enterManualMode : BOOL;
+        manual : StarterKit.TemplateController.TemplateManualCommand;
+    END_STRUCT
+END_TYPE
+END_NAMESPACE
+
 NAMESPACE StarterKit.StarterKitProgram
 TYPE
     analogConfig : STRUCT
         minRange : UDINT;
         maxRange : UDINT;
     END_STRUCT
+END_TYPE
+END_NAMESPACE
+
+NAMESPACE StarterKit.TemplateController
+TYPE
+    TemplateManualCommand : STRUCT
+        activateOutput : BOOL;
+        manualSetpoint : REAL;
+    END_STRUCT
+END_TYPE
+END_NAMESPACE
+
+NAMESPACE StarterKit.TemplateController
+TYPE
+    TemplateControllerState : (DISABLED := 0, INITIALISING := 1, IDLE := 2, MANUAL_MODE := 254, ERROR := 255) OF USINT;
 END_TYPE
 END_NAMESPACE
 

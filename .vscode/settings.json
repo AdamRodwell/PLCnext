@@ -108,7 +108,7 @@
         "alignedvector3": "cpp",
         "scoped_allocator": "cpp",
         "*.inc": "cpp",
-        "*.in": "cpp",
+        "*.in": "cmake",
         "pqxx": "cpp",
         "cursor": "cpp",
         "binarystring": "cpp"

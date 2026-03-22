@@ -43,6 +43,16 @@
             "problemMatcher": "$gcc"
         },
         {
+            "label": "utils_build",
+            "detail": "Build and install the Utils consumable library for ARM target",
+            "type": "shell",
+            "command": "export BUILD_TYPE=Release && echo Building Utils library && cd src/libs/Utils && plcncli build --verbose && echo Utils build complete",
+            "group": {
+                "kind": "build"
+            },
+            "problemMatcher": "$gcc"
+        },
+        {
             "label": "plcnext_run_cppcheck",
             "detail": "Run cppcheck on both PLC projects and libs",
             "type": "shell",

@@ -10,7 +10,8 @@ endif()
 
 file(GLOB_RECURSE Headers CONFIGURE_DEPENDS src/*.h src/*.hpp src/*.hxx intermediate/code/*.h intermediate/code/*.hpp intermediate/code/*.hxx)
 file(GLOB_RECURSE Sources CONFIGURE_DEPENDS src/*.cpp intermediate/code/*.cpp)
-add_library(${CMAKE_PROJECT_NAME} SHARED ${Headers} ${Sources})
+file(GLOB_RECURSE UtilsSources CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/../../libs/Utils/src/*.cpp)
+add_library(${CMAKE_PROJECT_NAME} SHARED ${Headers} ${Sources} ${UtilsSources})
 
 #######################################################################################
 
@@ -19,7 +20,8 @@ add_library(${CMAKE_PROJECT_NAME} SHARED ${Headers} ${Sources})
 target_include_directories(${CMAKE_PROJECT_NAME}
     PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/intermediate/code>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>)
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../libs/Utils/include>)
 
 #######################################################################################
 

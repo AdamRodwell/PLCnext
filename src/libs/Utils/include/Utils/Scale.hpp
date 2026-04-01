@@ -10,7 +10,8 @@
 namespace Utils
 {
 
-inline double Scale(double value, double inMin, double inMax, double outMin, double outMax)
+inline double
+Scale(double value, double inMin, double inMax, double outMin, double outMax)
 {
     if (inMax == inMin)
         return outMin;

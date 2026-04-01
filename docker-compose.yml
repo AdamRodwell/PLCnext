@@ -1,6 +1,7 @@
 services:
   dev:
     image: ghcr.io/adamrodwell/plc-next-ghcr:2024
+    container_name: plcnext-dev
     volumes:
       - .:/workspace:cached
       - ~/.claude:/home/plc/.claude

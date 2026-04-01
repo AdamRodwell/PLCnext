@@ -3,6 +3,9 @@
 #include "Arp/System/Commons/Logging.h"
 #include "Arp/System/Core/Arp.h"
 #include "StarterKitComponent.hpp"
+#include "Utils/EdgeTrigger.hpp"
+#include "Utils/Scale.hpp"
+#include "Utils/Timer.hpp"
 
 namespace StarterKit
 {
@@ -266,7 +269,12 @@ class StarterKitProgram : public ProgramBase, private Loggable<StarterKitProgram
 
   private: // fields
     StarterKit::StarterKitComponent &starterKitComponent;
-    uint32 convertMillivoltsToRange(uint32 millivolts, uint32 minRange, uint32 maxRange);
+
+    // Utils: detect rising edge of readAnalog1 command so we log once per activation
+    Utils::EdgeTrigger readAnalog1Trig_{Utils::TriggerEdge::RISING};
+
+    // Utils: 500 ms on-delay before fan outputs are allowed to activate
+    Utils::TON outputOnDelay_{std::chrono::milliseconds(500)};
 };
 
 ///////////////////////////////////////////////////////////////////////////////

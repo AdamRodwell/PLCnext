@@ -2,7 +2,6 @@
 // TON — on-delay, TOF — off-delay, TP — pulse  (IEC 61131-3)
 // Interface: update(bool in), Q(), ET(), setPT()
 
-#include "Arp/System/Commons/Chrono/SystemTick.hpp"
 #include <boost/optional.hpp>
 #include <chrono>
 #include <cmath>
@@ -10,24 +9,28 @@
 namespace Utils
 {
 
-using namespace Arp::System::Commons::Chrono;
-
 // Internal elapsed-time helper used by TON / TOF / TP / EdgeTrigger.
 class Timer
 {
   public:
-    Timer() : startUs_(SystemTick::GetMicroTick().count()) {}
+    Timer() : startUs_(now()) {}
 
-    inline void    restart()             { startUs_ = SystemTick::GetMicroTick().count(); }
+    inline void    restart()             { startUs_ = now(); }
     inline int64_t elapsedMicroseconds() const
     {
-        return static_cast<int64_t>(
-            std::fabs(static_cast<double>(SystemTick::GetMicroTick().count() - startUs_)));
+        return static_cast<int64_t>(std::fabs(static_cast<double>(now() - startUs_)));
     }
     inline int64_t elapsedMilliseconds() const { return elapsedMicroseconds() / 1000; }
 
   private:
     int64_t startUs_ = 0;
+
+    static int64_t now()
+    {
+        return std::chrono::duration_cast<std::chrono::microseconds>(
+                   std::chrono::steady_clock::now().time_since_epoch())
+            .count();
+    }
 };
 
 // Q true after IN has been continuously true for >= PT.

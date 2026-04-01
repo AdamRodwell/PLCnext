@@ -4,26 +4,12 @@
 
 namespace StarterKit
 {
-uint32
-StarterKitProgram::convertMillivoltsToRange(uint32 millivolts, uint32 minRange, uint32 maxRange)
-{
-    // Convert millivolts to volts as a floating-point number
-    double voltage = static_cast<double>(millivolts) / 1000.0;
-
-    // Assuming voltage is now in the range 0-10V
-    // Scale the voltage to the new range
-    double scaled = ((voltage / 10.0) * (maxRange - minRange)) + minRange;
-
-    // Cast the result to uint32 for return
-    return scaled;
-}
-
 void
 StarterKitProgram::Execute()
 {
-    // implement program
-
-    if (config_.allowOutputs && command_.setOutput)
+    // TON: fans only activate after command has been held true for 500 ms
+    outputOnDelay_.update(config_.allowOutputs && command_.setOutput);
+    if (outputOnDelay_.Q())
     {
         // control two fans for cooling
         dOUT01_ = true;
@@ -35,14 +21,19 @@ StarterKitProgram::Execute()
         dOUT02_ = false;
     }
 
-    if (command_.readAnalog1)
+    // EdgeTrigger: log analog reading only on the rising edge of readAnalog1
+    readAnalog1Trig_.update(static_cast<bool>(command_.readAnalog1));
+    if (readAnalog1Trig_.Q())
     {
         uint32 analogReading = aiN1_;
 
         log.Info("Analog one reading: {0}", analogReading);
 
-        const double scaledReading = convertMillivoltsToRange(
-            analogReading, config_.analogInOne.minRange, config_.analogInOne.maxRange);
+        const double scaledReading = Utils::Scale(
+            static_cast<double>(analogReading),
+            0.0, 10000.0,
+            static_cast<double>(config_.analogInOne.minRange),
+            static_cast<double>(config_.analogInOne.maxRange));
 
         log.Info("Scaled analog reading {0}", scaledReading);
     }

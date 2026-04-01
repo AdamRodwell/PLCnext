@@ -5,5 +5,5 @@
   <Name>StarterKit</Name>
   <GenerateDTArrayNameByType>true</GenerateDTArrayNameByType>
   <GenerateNamespaces>true</GenerateNamespaces>
-  <Target>AXCF2152,24.0.9.199</Target>
+  <Target>AXCF2152,2024.0.0 LTS (24.0.0.102)</Target>
 </ProjectSettings>

@@ -3,6 +3,7 @@
 #include "Arp/System/Commons/Logging.h"
 #include "Arp/System/Core/Arp.h"
 #include "StarterKitComponent.hpp"
+#include "Arp/System/Commons/Chrono/SystemTick.hpp"
 #include "Utils/Alert.hpp"
 #include "Utils/EdgeTrigger.hpp"
 #include "Utils/Timer.hpp"

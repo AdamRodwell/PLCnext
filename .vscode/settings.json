@@ -9,9 +9,6 @@
     "editor.rulers": [
         100
     ],
-    "clang-format.executable": "/usr/bin/clang-format-14",
-    "clang-format.style": "file",
-    "clang-format.language.c.enable": true,
     "C_Cpp.files.exclude": {
         "**/build/**": true,
     },
@@ -170,5 +167,5 @@
         }
     ],
     "cmake.ignoreCMakeListsMissing": true,
-    "C_Cpp.default.compilerPath": "/opt/plcnext_axcf2152_sdk_2023/sysroots/x86_64-pokysdk-linux/usr/bin/arm-pxc-linux-gnueabi/arm-pxc-linux-gnueabi-g++"
+    "C_Cpp.default.compilerPath": "/opt/axcf2152-sdk/sysroots/x86_64-pokysdk-linux/usr/bin/arm-pxc-linux-gnueabi/arm-pxc-linux-gnueabi-g++"
 }

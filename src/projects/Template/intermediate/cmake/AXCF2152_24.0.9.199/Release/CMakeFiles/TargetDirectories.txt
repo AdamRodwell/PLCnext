@@ -1,0 +1,7 @@
+/workspaces/PLCnext/src/projects/Template/intermediate/cmake/AXCF2152_24.0.9.199/Release/CMakeFiles/Template.dir
+/workspaces/PLCnext/src/projects/Template/intermediate/cmake/AXCF2152_24.0.9.199/Release/CMakeFiles/edit_cache.dir
+/workspaces/PLCnext/src/projects/Template/intermediate/cmake/AXCF2152_24.0.9.199/Release/CMakeFiles/rebuild_cache.dir
+/workspaces/PLCnext/src/projects/Template/intermediate/cmake/AXCF2152_24.0.9.199/Release/CMakeFiles/list_install_components.dir
+/workspaces/PLCnext/src/projects/Template/intermediate/cmake/AXCF2152_24.0.9.199/Release/CMakeFiles/install.dir
+/workspaces/PLCnext/src/projects/Template/intermediate/cmake/AXCF2152_24.0.9.199/Release/CMakeFiles/install/local.dir
+/workspaces/PLCnext/src/projects/Template/intermediate/cmake/AXCF2152_24.0.9.199/Release/CMakeFiles/install/strip.dir

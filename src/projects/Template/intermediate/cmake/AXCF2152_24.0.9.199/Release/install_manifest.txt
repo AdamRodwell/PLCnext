@@ -1,0 +1,1 @@
+/workspaces/PLCnext/src/projects/Template/bin/AXCF2152_24.0.9.199/Release/lib/libTemplate.so

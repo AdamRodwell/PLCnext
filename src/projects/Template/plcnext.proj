@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.phoenixcontact.com/schema/cliproject">
+  <Id>b7a5c125-c79f-4234-bc72-c9cb5d1fe2c8</Id>
+  <Version>4.0</Version>
+  <Name>Template</Name>
+  <GenerateDTArrayNameByType>true</GenerateDTArrayNameByType>
+  <GenerateNamespaces>true</GenerateNamespaces>
+  <Target>AXCF2152,2024.0.9 LTS (24.0.9.199)</Target>
+</ProjectSettings>

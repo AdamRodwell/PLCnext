@@ -7,7 +7,7 @@ namespace StarterKit
 void
 StarterKitProgram::Execute()
 {
-    // TON: fans only activate after command has been held true for 500 ms
+    //# TON: fans only activate after command has been held true for 500 ms
     outputOnDelay_.update(config_.allowOutputs && command_.setOutput);
     if (outputOnDelay_.Q())
     {
@@ -29,11 +29,10 @@ StarterKitProgram::Execute()
 
         log.Info("Analog one reading: {0}", analogReading);
 
-        const double scaledReading = Utils::Scale(
-            static_cast<double>(analogReading),
-            0.0, 10000.0,
-            static_cast<double>(config_.analogInOne.minRange),
-            static_cast<double>(config_.analogInOne.maxRange));
+        const double scaledReading =
+            Utils::Scale(static_cast<double>(analogReading), 0.0, 10000.0,
+                         static_cast<double>(config_.analogInOne.minRange),
+                         static_cast<double>(config_.analogInOne.maxRange));
 
         log.Info("Scaled analog reading {0}", scaledReading);
     }

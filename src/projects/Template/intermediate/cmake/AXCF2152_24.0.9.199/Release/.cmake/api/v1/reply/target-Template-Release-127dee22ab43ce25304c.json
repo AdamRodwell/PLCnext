@@ -1,0 +1,436 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "libTemplate.so"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"install",
+			"target_link_options",
+			"target_link_libraries",
+			"find_package",
+			"target_include_directories"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt",
+			"/opt/axcf2152-sdk/cmake/FindArpProgramming.cmake"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 13,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 69,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 47,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 48,
+				"parent" : 0
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 60,
+				"parent" : 0
+			},
+			{
+				"file" : 1,
+				"parent" : 5
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 144,
+				"parent" : 6
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 61,
+				"parent" : 0
+			},
+			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 19,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "  -mthumb -mfpu=neon -mfloat-abi=hard -mcpu=cortex-a9 -O3 -DNDEBUG -std=c++17 -fPIC"
+				},
+				{
+					"backtrace" : 8,
+					"fragment" : "-fno-gnu-unique"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 8,
+					"define" : "ARP_DEVICE_AXCF2152"
+				},
+				{
+					"define" : "Template_EXPORTS"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 9,
+					"path" : "/workspaces/PLCnext/src/projects/Template/intermediate/code"
+				},
+				{
+					"backtrace" : 9,
+					"path" : "/workspaces/PLCnext/src/projects/Template/src"
+				},
+				{
+					"backtrace" : 8,
+					"path" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/include/plcnext"
+				},
+				{
+					"backtrace" : 8,
+					"path" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/include/libxml2"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "17"
+			},
+			"sourceIndexes" : 
+			[
+				5,
+				6,
+				7,
+				8,
+				9,
+				10
+			],
+			"sysroot" : 
+			{
+				"path" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi"
+			}
+		}
+	],
+	"id" : "Template::@6890427a1f51a3e7e1df",
+	"install" : 
+	{
+		"destinations" : 
+		[
+			{
+				"backtrace" : 2,
+				"path" : "AXCF2152_24.0.9.199/Release/lib"
+			},
+			{
+				"backtrace" : 2,
+				"path" : "AXCF2152_24.0.9.199/Release/lib"
+			}
+		],
+		"prefix" : 
+		{
+			"path" : "/usr/local"
+		}
+	},
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 3,
+				"fragment" : "-Wl,--no-undefined",
+				"role" : "flags"
+			},
+			{
+				"backtrace" : 4,
+				"fragment" : "-Wl,--as-needed",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "-Wl,-rpath,:::::::",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.System.Acf.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.System.Commons.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.System.Core.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.Plc.Commons.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.System.Rsc.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.System.Commons.Services.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.System.Lm.Services.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.System.Nm.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.System.NmPayload.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.System.Security.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.System.Security.Services.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.System.Um.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.System.Ve.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.Plc.Domain.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.Plc.Gds.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.Plc.Meta.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.Device.Interface.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.Services.NotificationLogger.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.Hardware.Nim.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libcppformat.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libpthread.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.Io.Axioline.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.Io.Interbus.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.Io.Profibus.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.Io.ProfinetStack.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.Services.OpcUAServer.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.Services.TraceController.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/lib/libArp.Services.DataLogger.so",
+				"role" : "libraries"
+			}
+		],
+		"language" : "CXX",
+		"sysroot" : 
+		{
+			"path" : "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi"
+		}
+	},
+	"name" : "Template",
+	"nameOnDisk" : "libTemplate.so",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4
+			]
+		},
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				5,
+				6,
+				7,
+				8,
+				9,
+				10
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"path" : "intermediate/code/TemplateComponentProgramProvider.hpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "intermediate/code/TemplateLibrary.hpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/TemplateComponent.hpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/TemplateLibraryInfo.hpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/TemplateProgram.hpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "intermediate/code/TemplateComponent.meta.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "intermediate/code/TemplateComponentProgramProvider.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "intermediate/code/TemplateLibrary.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "intermediate/code/TemplateLibrary.meta.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/TemplateComponent.cpp",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/TemplateProgram.cpp",
+			"sourceGroupIndex" : 1
+		}
+	],
+	"type" : "SHARED_LIBRARY"
+}

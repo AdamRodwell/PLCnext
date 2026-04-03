@@ -2,6 +2,13 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "update_build_targets",
+            "detail": "Sync <Target> in all .proj files from the docker-compose.yml image tag",
+            "type": "shell",
+            "command": "bash ${workspaceFolder}/scripts/update_build_targets.sh",
+            "problemMatcher": []
+        },
+        {
             "label": "plcnext_new_project",
             "detail": "Create a new PLCNext PLM project",
             "type": "shell",

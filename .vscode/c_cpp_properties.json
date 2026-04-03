@@ -5,13 +5,13 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/usr/include/**",
-                "/opt/axcf2152-linux_sdk_2024/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/include/**",
+                "/opt/axcf2152-sdk/sysroots/cortexa9t2hf-neon-pxc-linux-gnueabi/usr/include/**",
                 "${workspaceFolder}/src/projects/StarterKit/**"
             ],
             "defines": [
                 "__ARM_PCS_VFP"
             ],
-            "compilerPath": "/opt/axcf2152-linux_sdk_2024/sysroots/x86_64-pokysdk-linux/usr/bin/arm-pxc-linux-gnueabi/arm-pxc-linux-gnueabi-g++",
+            "compilerPath": "/opt/axcf2152-sdk/sysroots/x86_64-pokysdk-linux/usr/bin/arm-pxc-linux-gnueabi/arm-pxc-linux-gnueabi-g++",
             "cStandard": "c99",
             "cppStandard": "c++14",
             "intelliSenseMode": "linux-gcc-arm",

@@ -5,6 +5,7 @@ services:
     volumes:
       - .:/workspace:cached
       - ~/.claude:/home/plc/.claude
+      - "C:\\Users\\User\\Documents\\PLCnext Engineer\\Libraries:/home/plc/Windows_PLCNextEngineer_Libraries"
     command: sleep infinity
     environment:
       - SHELL=/bin/zsh

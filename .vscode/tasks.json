@@ -26,7 +26,7 @@
             "label": "plcnext_build",
             "detail": "Build a PLCNext PLM project. Note: do not use this method if the port definitions have changed since it does not generate the required code for this.",
             "type": "shell",
-            "command": "export BUILD_TYPE=Release && echo Build PLCNext project for project ${input:project_name} && cd src/projects/${input:project_name} && plcncli build --verbose && plcncli deploy && cp bin/${input:project_name}.pcwlx /home/plc/Windows_PLCNextEngineer_Libraries",
+            "command": "export BUILD_TYPE=Release && echo Build PLCNext project for project ${input:project_name} && cd src/projects/${input:project_name} && plcncli build --verbose && plcncli deploy && cp bin/${input:project_name}.pcwlx /home/plc/Windows_PLCNextEngineer_Libraries/",
             "group": {
                 "kind": "build"
             },
@@ -36,7 +36,7 @@
             "label": "plcnext_gen_build",
             "detail": "Build a PLCNext PLM project",
             "type": "shell",
-            "command": "export BUILD_TYPE=Release && echo Build PLCNext release project for project ${input:project_name} && cd src/projects/${input:project_name} && plcncli generate code --verbose && plcncli generate config --verbose && plcncli build --verbose && plcncli deploy && cp bin/${input:project_name}.pcwlx /home/plc/Windows_PLCNextEngineer_Libraries && echo 'File copied successfully'",
+            "command": "export BUILD_TYPE=Release && echo Build PLCNext release project for project ${input:project_name} && cd src/projects/${input:project_name} && plcncli generate code --verbose && plcncli generate config --verbose && plcncli build --verbose && plcncli deploy && cp bin/${input:project_name}.pcwlx /home/plc/Windows_PLCNextEngineer_Libraries/ && echo 'File copied successfully'",
             "group": {
                 "kind": "build"
             },
@@ -51,6 +51,13 @@
                 "kind": "build"
             },
             "problemMatcher": "$gcc"
+        },
+        {
+            "label": "copy_to_windows",
+            "detail": "Copy built .pcwlx to Windows PLCnext Engineer Libraries folder",
+            "type": "shell",
+            "command": "cp -v src/projects/${input:project_name}/bin/${input:project_name}.pcwlx /home/plc/Windows_PLCNextEngineer_Libraries/ && ls -lh /home/plc/Windows_PLCNextEngineer_Libraries/",
+            "problemMatcher": []
         },
         {
             "label": "plcnext_run_cppcheck",

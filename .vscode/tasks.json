@@ -67,6 +67,13 @@
             "problemMatcher": []
         },
         {
+            "label": "update_project_list",
+            "detail": "Scan src/projects/ and update the project_name pick-list in tasks.json",
+            "type": "shell",
+            "command": "bash ${workspaceFolder}/scripts/update_project_list.sh",
+            "problemMatcher": []
+        },
+        {
             "label": "plcnext_run_cppcheck",
             "detail": "Run cppcheck on both PLC projects and libs",
             "type": "shell",
@@ -103,8 +110,18 @@
         {
             "id": "project_name",
             "description": "Name of project for plcnext",
-            "default": "Hello",
-            "type": "promptString",
+            "default": "StarterKit",
+            "type": "pickString",
+            "options": [
+                {
+                    "label": "StarterKit",
+                    "value": "StarterKit"
+                },
+                {
+                    "label": "Template",
+                    "value": "Template"
+                }
+            ]
         }
     ]
 }

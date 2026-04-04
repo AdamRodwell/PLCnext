@@ -2,60 +2,215 @@
 #include "Arp/System/Core/Arp.h"
 #include "Arp/Plc/Commons/Esm/ProgramBase.hpp"
 #include "Arp/System/Commons/Logging.h"
+#include "Arp/System/Commons/Chrono/SystemTick.hpp"
 #include "TemplateComponent.hpp"
+#include "Utils/Alert.hpp"
+#include "Utils/EdgeTrigger.hpp"
+#include "Utils/Timer.hpp"
+#include <boost/optional.hpp>
+
+// TODO: add sub-system includes
 
 namespace Template
 {
 
 using namespace Arp;
 using namespace Arp::System::Commons::Diagnostics::Logging;
+using namespace Arp::System::Commons::Chrono;
 using namespace Arp::Plc::Commons::Esm;
+using namespace Utils;
 
+// ============================================================================
+// Error class — defined outside the program so it can be used as a port
+// type and read by other programs.
+//
+// Add one public Arp::boolean per fault condition.
+//   warning* prefix — non-critical (WARNING severity)
+//   error*   prefix — critical     (ERROR severity)
+// ============================================================================
+class TemplateProgramError : public Alert
+{
+  public:
+    // --- Warnings ---
+    Arp::boolean warningExampleTimeout      = false; // TODO: rename / add real warnings
+    Arp::boolean warningExampleSensorFailed = false;
+
+    // --- Errors ---
+    Arp::boolean errorExampleUnexpectedState = false; // TODO: rename / add real errors
+
+    // --- Aggregated sub-system faults ---
+    Arp::boolean hasErrorSubSystem   = false;
+    Arp::boolean hasWarningSubSystem = false;
+
+    inline ErrorSeverity severity() const override
+    {
+        if (errorExampleUnexpectedState || hasErrorSubSystem)
+            return ErrorSeverity::ERROR;
+        if (warningExampleTimeout || warningExampleSensorFailed || hasWarningSubSystem)
+            return ErrorSeverity::WARNING;
+        return ErrorSeverity::NONE;
+    }
+
+    inline ErrorCode activeCode() const override
+    {
+        if (errorExampleUnexpectedState)
+            return ErrorCodes::UNEXPECTED_STATE;
+        if (hasErrorSubSystem)
+            return ErrorCodes::SUBSYSTEM_FAULT;
+        if (warningExampleTimeout)
+            return ErrorCodes::TIMEOUT;
+        if (warningExampleSensorFailed)
+            return ErrorCodes::SENSOR_FAILURE;
+        if (hasWarningSubSystem)
+            return ErrorCodes::SUBSYSTEM_FAULT;
+        return ErrorCodes::NONE;
+    }
+
+    inline void clear() override
+    {
+        warningExampleTimeout       = false;
+        warningExampleSensorFailed  = false;
+        errorExampleUnexpectedState = false;
+        hasErrorSubSystem           = false;
+        hasWarningSubSystem         = false;
+        // TODO: clear all flags
+    }
+
+    inline void clearWarnings()
+    {
+        warningExampleTimeout      = false;
+        warningExampleSensorFailed = false;
+        hasWarningSubSystem        = false;
+        // TODO: clear all warning-only flags
+    }
+};
+
+// ============================================================================
 //#program
 //#component(Template::TemplateComponent)
 class TemplateProgram : public ProgramBase, private Loggable<TemplateProgram>
 {
-public: // typedefs
+  public:
+    enum class TemplateProgramState : Arp::uint8
+    {
+        DISABLED     = 0x00,
+        INITIALISING = 0x01,
+        IDLE         = 0x02,
+        // TODO: add operation-specific states
+        MANUAL_MODE = 0xFE,
+        ERROR       = 0xFF
+    };
 
-public: // construction/destruction
-    TemplateProgram(Template::TemplateComponent& templateComponentArg, const String& name);
+    struct TemplateProgramConfig
+    {
+        // TODO: replace with real config fields
+        Arp::uint32  exampleTimeoutMs     = 5000;
+        Arp::float32 examplePositionMm   = 0.0f;
+        Arp::boolean exampleIgnoreSensor = false;
+    };
+
+    struct TemplateProgramManualCommand
+    {
+        // TODO: add manual control fields
+        Arp::boolean activateOutput = false;
+        Arp::float32 manualSetpoint = 0.0f;
+    };
+
+    struct TemplateProgramCommand
+    {
+        Arp::boolean disable         = false;
+        Arp::boolean initialise      = false;
+        Arp::boolean startCycle      = false; // TODO: rename / add operation commands
+        Arp::boolean enterManualMode = false;
+
+        TemplateProgramManualCommand manual;
+    };
+
+    struct TemplateProgramData
+    {
+        Arp::boolean isInitialisationDone = false;
+        Arp::boolean isCycleDone          = false; // TODO: replace with real status flags
+        Arp::uint32  cycleCount           = 0;
+
+        TemplateProgramState currentState = TemplateProgramState::DISABLED;
+        TemplateProgramError error;
+    };
+
+  public: // construction/destruction
+    TemplateProgram(Template::TemplateComponent &templateComponentArg, const String &name);
 #if ARP_ABI_VERSION_MAJOR < 2
-    TemplateProgram(const TemplateProgram& arg) = delete;
-    virtual ~TemplateProgram() = default;
+    TemplateProgram(const TemplateProgram &arg) = delete;
+    virtual ~TemplateProgram()                  = default;
 #endif
 
-public: // operators
+  public: // operators
 #if ARP_ABI_VERSION_MAJOR < 2
-    TemplateProgram&  operator=(const TemplateProgram& arg) = delete;
+    TemplateProgram &operator=(const TemplateProgram &arg) = delete;
 #endif
 
-public: // properties
+  public: // operations
+    void Execute() override;
 
-public: // operations
-    void    Execute() override;
+  public: /* ---- Ports ---------------------------------------------------------
+               //#port
+               //#attributes(Input|Output|Opc|Retain)
+               //#name(<HMI tag name>)
+             -------------------------------------------------------------------*/
+    //#port
+    //#attributes(Input|Opc|Retain)
+    //#name(Config)
+    TemplateProgramConfig config_;
 
-public: /* Ports
-           =====
-           Ports are defined in the following way:
-           //#port
-           //#attributes(Input|Retain)
-           //#name(NameOfPort)
-           boolean portField;
+    //#port
+    //#attributes(Output|Opc)
+    //#name(Data)
+    TemplateProgramData data_;
 
-           The attributes comment define the port attributes and is optional.
-           The name comment defines the name of the port and is optional. Default is the name of the field.
-        */
+    // TODO: add output command ports for sub-systems
 
-private: // fields
-    Template::TemplateComponent& templateComponent;
+    //#port
+    //#attributes(Output|Opc)
+    //#name(SystemTemplateError)
+    TemplateProgramError systemTemplateError;
 
+    //#port
+    //#attributes(Input|Opc)
+    //#name(Command)
+    TemplateProgramCommand command_;
+
+    // TODO: add input data ports from sub-systems
+
+    //#port
+    //#attributes(Input|Opc)
+    //#name(ExampleSensor)
+    Arp::boolean exampleSensor_ = false; // TODO: rename / add real sensor ports
+
+  private: // fields
+    Template::TemplateComponent &templateComponent;
+
+    // Edge triggers — call .update() at top of Execute(), read .check() in state cases.
+    EdgeTrigger initialiseEdge_{command_.initialise, TriggerEdge::RISING};
+    EdgeTrigger startCycleEdge_{command_.startCycle, TriggerEdge::RISING, true};
+    // TODO: add EdgeTrigger fields for all command/sensor signals that gate transitions
+
+    // IEC timers — call .update(condition) before the switch; read .Q() inside states.
+    TON exampleDelayTimer_{std::chrono::milliseconds(0)}; // TODO: rename, set PT from config
+
+    Arp::boolean agentInitialising_     = false;
+    Arp::boolean agentInitialisingDone_ = false;
+
+  private:
+    void CheckSubSystemErrors();
+    // TODO: add private helper declarations
 };
 
+std::string toString(const TemplateProgramError &errorInstance);
+
 ///////////////////////////////////////////////////////////////////////////////
-// inline methods of class ProgramBase
-inline TemplateProgram::TemplateProgram(Template::TemplateComponent& templateComponentArg, const String& name)
-: ProgramBase(name)
-, templateComponent(templateComponentArg)
+// inline methods of class TemplateProgram
+inline TemplateProgram::TemplateProgram(Template::TemplateComponent &templateComponentArg,
+                                        const String &name)
+    : ProgramBase(name), templateComponent(templateComponentArg)
 {
 }
 

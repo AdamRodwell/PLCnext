@@ -1,10 +1,8 @@
 #include "Utils/EdgeTrigger.hpp"
-#include "Arp/System/Commons/Logging.h"
+#include <cstdio>
 
 namespace Utils
 {
-
-using namespace Arp::System::Commons::Diagnostics::Logging;
 
 EdgeTrigger::EdgeTrigger(bool &signal, TriggerEdge edge)
     : signal_(signal), edge_(edge), isTracked_(true)
@@ -32,7 +30,7 @@ EdgeTrigger::update()
 {
     if (!isTracked_)
     {
-        Log::Error("EdgeTrigger::update() called on an untracked instance — use update(bool)");
+        fprintf(stderr, "EdgeTrigger::update() called on an untracked instance — use update(bool)\n");
         return;
     }
     current_ = signal_;

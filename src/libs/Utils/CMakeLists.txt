@@ -6,7 +6,7 @@ if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
 endif()
 
-set (ArpProgramming_ARP_IO_PROFIBUS_LIBRARY FALSE)
+#set (ArpProgramming_ARP_IO_PROFIBUS_LIBRARY FALSE)
 
 file(GLOB_RECURSE Headers CONFIGURE_DEPENDS src/*.h src/*.hpp src/*.hxx)
 file(GLOB_RECURSE PublicHeaders CONFIGURE_DEPENDS include/*.h include/*.hpp include/*.hxx)
@@ -34,10 +34,10 @@ endif()
 
 target_link_options(${CMAKE_PROJECT_NAME} PRIVATE LINKER:--no-undefined)
 
-find_package(ArpDevice REQUIRED)
-find_package(ArpProgramming REQUIRED)
+# find_package(ArpDevice REQUIRED)
+# find_package(ArpProgramming REQUIRED)
 
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ArpDevice ArpProgramming)
+# target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ArpDevice ArpProgramming)
 
 include(CMakePackageConfigHelpers)
 configure_package_config_file(

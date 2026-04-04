@@ -5,8 +5,6 @@
 //
 // Returns outMin when inMax == inMin to avoid division by zero.
 
-#include "Arp/System/Core/Arp.h"
-
 namespace Utils
 {
 

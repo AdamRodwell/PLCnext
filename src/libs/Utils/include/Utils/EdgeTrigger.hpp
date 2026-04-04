@@ -6,17 +6,14 @@
 //   Hold      — Q true until clear() is called (pass hold=true).
 //   Timed hold — Q true for N milliseconds (pass holdMillis > 0).
 
-#include "Arp/System/Commons/Logging.h"
-#include "Arp/System/Core/Arp.h"
 #include "Utils/Timer.hpp"
 #include <boost/optional.hpp>
+#include <cstdint>
 
 namespace Utils
 {
 
-using namespace Arp::System::Commons::Diagnostics::Logging;
-
-enum class TriggerEdge : Arp::uint8
+enum class TriggerEdge : uint8_t
 {
     RISING,  // R_TRIG: 0→1
     FALLING, // F_TRIG: 1→0

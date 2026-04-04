@@ -1,20 +1,18 @@
 #pragma once
-#include "Arp/System/Core/Arp.h"
+#include <cstdint>
 
 namespace Utils
 {
 
-using namespace Arp;
-
 // Priority order: NONE < WARNING < ERROR
-enum class ErrorSeverity : Arp::uint8
+enum class ErrorSeverity : uint8_t
 {
     NONE    = 0,
     WARNING = 1,
     ERROR   = 2,
 };
 
-using ErrorCode = Arp::uint16;
+using ErrorCode = uint16_t;
 
 namespace ErrorCodes
 {

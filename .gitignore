@@ -15,5 +15,7 @@ __pycache__/*
 .husky/
 node_modules/
 .sentry-native/
-bin/*
+**/bin/
 **/intermediate/
+**/external/*
+!**/external/ADD_DEPENDENT_LIBRARIES_HERE.txt

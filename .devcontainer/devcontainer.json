@@ -1,9 +1,10 @@
 {
   "name": "PLCNext Dev Container",
   "image": "ghcr.io/adamrodwell/plc-next-ghcr:axcf2152-linux_sdk-2024.0.9_lts-24.0.9.199",
+  "initializeCommand": "mkdir -p \"${localEnv:HOME}/Documents/PLCnext Engineer/Libraries\"",
   "mounts": [
     "source=${localEnv:HOME}/.claude,target=/home/plc/.claude,type=bind,consistency=cached",
-    "source=${localEnv:USERPROFILE}/Documents/PLCnext Engineer/Libraries,target=/home/plc/Windows_PLCNextEngineer_Libraries,type=bind,consistency=cached"
+    "source=${localEnv:HOME}/Documents/PLCnext Engineer/Libraries,target=/home/plc/Windows_PLCNextEngineer_Libraries,type=bind,consistency=cached"
   ],
   "containerEnv": {
     "ANTHROPIC_API_KEY": "${localEnv:ANTHROPIC_API_KEY}",
@@ -12,23 +13,19 @@
   "customizations": {
     "vscode": {
       "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "workbench.colorTheme": "Default Dark Modern",
+        "editor.semanticHighlighting.enabled": true,
         "editor.formatOnSave": true,
         "editor.codeActionsOnSave": {
-          "source.fixAll": true
+          "source.fixAll": "explicit"
         },
-        "editor.fontFamily": "'MesloLGS NF',Consolas, 'Courier New', monospace",
-        "editor.tabSize": 4,
-        "editor.insertSpaces": true,
-        "editor.rulers": [
-          100
-        ],
         "clang-format.executable": "/usr/bin/clang-format-14",
         "clang-format.style": "file",
         "clang-format.language.c.enable": true,
         "[cpp]": {
           "editor.defaultFormatter": "xaver.clang-format"
         },
-        "terminal.integrated.defaultProfile.linux": "zsh"
       },
       "extensions": [
         "ms-vscode.cpptools",

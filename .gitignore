@@ -16,4 +16,4 @@ __pycache__/*
 node_modules/
 .sentry-native/
 bin/*
-intermediate/*
+**/intermediate/

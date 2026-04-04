@@ -165,7 +165,7 @@ class TemplateProgram : public ProgramBase, private Loggable<TemplateProgram>
     //#port
     //#attributes(Input|Opc)
     //#name(Command)
-    TemplateProgramCmd command_;
+    TemplateProgramCmd cmd_;
 
     // TODO: add input data ports from sub-systems
 

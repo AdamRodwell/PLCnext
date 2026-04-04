@@ -104,26 +104,6 @@ TemplateProgram::Execute()
             }
             break;
 
-            // TODO: add operation-specific states, e.g.:
-            //
-            // case TemplateProgramMode::FIRST_OP_STATE:
-            //     exampleDelayTimer_.setPT(std::chrono::milliseconds(config_.exampleTimeoutMs));
-            //     exampleDelayTimer_.update(true);
-            //     SafetyCheck();
-            //     if (exampleDelayTimer_.Q())
-            //     {
-            //         data_.error.errorExampleUnexpectedMode = true;
-            //         exampleDelayTimer_.update(false);
-            //         data_.currentState = TemplateProgramMode::ERROR;
-            //         break;
-            //     }
-            //     if (<done condition>)
-            //     {
-            //         exampleDelayTimer_.update(false);
-            //         data_.currentState = TemplateProgramMode::IDLE;
-            //     }
-            //     break;
-
         case TemplateProgramMode::MANUAL_MODE:
             if (!command_.enterManualMode)
             {

@@ -14,15 +14,6 @@ namespace
 // TODO: add file-local pure utility helpers here
 } // namespace
 
-void
-TemplateProgram::CheckSubSystemErrors()
-{
-    // TODO: mirror sub-system error/warning flags into data_.error, e.g.:
-    // data_.error.hasErrorSubSystem   = dataSubSystem_.error.hasError();
-    // data_.error.hasWarningSubSystem = dataSubSystem_.error.hasWarning();
-    (void)this;
-}
-
 // TODO: implement additional private methods, e.g.:
 // void TemplateProgram::SafetyCheck() { ... }
 
@@ -43,14 +34,13 @@ TemplateProgram::Execute()
         // 3. Global disable / error guard
         if (command_.disable || (data_.error.hasError() && !command_.initialise))
         {
-            data_.currentState = TemplateProgramState::DISABLED;
-            // TODO: drive sub-system commands to safe defaults
+            data_.currentState = TemplateProgramMode::DISABLED;
         }
 
         // 4. State machine
         switch (data_.currentState)
         {
-        case TemplateProgramState::DISABLED:
+        case TemplateProgramMode::DISABLED:
             data_.isInitialisationDone = false;
             data_.isCycleDone          = false;
             data_.cycleCount           = 0;
@@ -59,21 +49,19 @@ TemplateProgram::Execute()
             agentInitialising_     = false;
             agentInitialisingDone_ = false;
 
-            // TODO: drive all sub-system command ports to their safe/off state
-
             if (command_.enterManualMode)
             {
-                data_.currentState = TemplateProgramState::MANUAL_MODE;
+                data_.currentState = TemplateProgramMode::MANUAL_MODE;
                 log.Info("{0}: Entering MANUAL_MODE from DISABLED", GetFullName());
             }
             else if (initialiseEdge_.check())
             {
-                data_.currentState = TemplateProgramState::INITIALISING;
+                data_.currentState = TemplateProgramMode::INITIALISING;
                 log.Info("{0}: Entering INITIALISING", GetFullName());
             }
             break;
 
-        case TemplateProgramState::INITIALISING:
+        case TemplateProgramMode::INITIALISING:
             if (!agentInitialising_)
             {
                 // TODO: send reset/initialise commands to sub-systems
@@ -94,7 +82,7 @@ TemplateProgram::Execute()
                 if (subSystemReady)
                 {
                     data_.isInitialisationDone = true;
-                    data_.currentState         = TemplateProgramState::IDLE;
+                    data_.currentState         = TemplateProgramMode::IDLE;
                     log.Info("{0}: Initialisation complete, entering IDLE", GetFullName());
                 }
                 else
@@ -104,18 +92,18 @@ TemplateProgram::Execute()
             }
             break;
 
-        case TemplateProgramState::IDLE:
+        case TemplateProgramMode::IDLE:
             data_.isCycleDone = false;
 
             if (command_.enterManualMode)
             {
-                data_.currentState = TemplateProgramState::MANUAL_MODE;
+                data_.currentState = TemplateProgramMode::MANUAL_MODE;
                 log.Info("{0}: Entering MANUAL_MODE from IDLE", GetFullName());
             }
             else if (startCycleEdge_.check())
             {
                 data_.cycleCount++;
-                data_.error.clearWarnings();
+                data_.error.ackWarnings();
                 startCycleEdge_.clear();
                 // TODO: transition to first operation state
                 log.Info("{0}: Cycle {1} started", GetFullName(), data_.cycleCount);
@@ -124,53 +112,53 @@ TemplateProgram::Execute()
 
             // TODO: add operation-specific states, e.g.:
             //
-            // case TemplateProgramState::FIRST_OP_STATE:
+            // case TemplateProgramMode::FIRST_OP_STATE:
             //     exampleDelayTimer_.setPT(std::chrono::milliseconds(config_.exampleTimeoutMs));
             //     exampleDelayTimer_.update(true);
             //     SafetyCheck();
             //     if (exampleDelayTimer_.Q())
             //     {
-            //         data_.error.errorExampleUnexpectedState = true;
+            //         data_.error.errorExampleUnexpectedMode = true;
             //         exampleDelayTimer_.update(false);
-            //         data_.currentState = TemplateProgramState::ERROR;
+            //         data_.currentState = TemplateProgramMode::ERROR;
             //         break;
             //     }
             //     if (<done condition>)
             //     {
             //         exampleDelayTimer_.update(false);
-            //         data_.currentState = TemplateProgramState::IDLE;
+            //         data_.currentState = TemplateProgramMode::IDLE;
             //     }
             //     break;
 
-        case TemplateProgramState::MANUAL_MODE:
+        case TemplateProgramMode::MANUAL_MODE:
             if (!command_.enterManualMode)
             {
                 if (!data_.error.hasError())
                 {
                     log.Info("{0}: Leaving MANUAL_MODE", GetFullName());
-                    data_.currentState = TemplateProgramState::INITIALISING;
+                    data_.currentState = TemplateProgramMode::INITIALISING;
                 }
                 else
                 {
                     log.Warning("{0}: Leaving MANUAL_MODE with errors — entering ERROR",
                                 GetFullName());
-                    data_.currentState = TemplateProgramState::ERROR;
+                    data_.currentState = TemplateProgramMode::ERROR;
                     break;
                 }
             }
             // TODO: drive outputs from command_.manual fields
             break;
 
-        case TemplateProgramState::ERROR:
+        case TemplateProgramMode::ERROR:
             // TODO: drive all outputs to safe state
-            data_.currentState = TemplateProgramState::DISABLED;
+            data_.currentState = TemplateProgramMode::DISABLED;
             log.Error("{0}: Entered ERROR state — {1}", GetFullName(), toString(data_.error));
             break;
 
         default:
             log.Warning("{0}: Unknown state {1} — forcing DISABLED", GetFullName(),
                         static_cast<Arp::uint8>(data_.currentState));
-            data_.currentState = TemplateProgramState::DISABLED;
+            data_.currentState = TemplateProgramMode::DISABLED;
             break;
         }
 
@@ -178,14 +166,14 @@ TemplateProgram::Execute()
     catch (const std::exception &e)
     {
         log.Error("{0}: Exception in Execute(): {1}", GetFullName(), e.what());
-        data_.error.errorExampleUnexpectedState = true;
-        data_.currentState                      = TemplateProgramState::ERROR;
+        data_.error.errorExampleUnexpectedMode = true;
+        data_.currentState                     = TemplateProgramMode::ERROR;
     }
     catch (...)
     {
         log.Error("{0}: Unknown exception in Execute()", GetFullName());
-        data_.error.errorExampleUnexpectedState = true;
-        data_.currentState                      = TemplateProgramState::ERROR;
+        data_.error.errorExampleUnexpectedMode = true;
+        data_.currentState                     = TemplateProgramMode::ERROR;
     }
 }
 
@@ -199,12 +187,8 @@ toString(const TemplateProgramError &e)
         msg += "WARNING: Operation timed out\n";
     if (e.warningExampleSensorFailed)
         msg += "WARNING: Sensor did not respond\n";
-    if (e.hasWarningSubSystem)
-        msg += "WARNING: Sub-system warning active\n";
-    if (e.errorExampleUnexpectedState)
+    if (e.errorExampleUnexpectedMode)
         msg += "ERROR: Unexpected state\n";
-    if (e.hasErrorSubSystem)
-        msg += "ERROR: Sub-system fault\n";
     // TODO: add a line for every error/warning flag
 
     if (msg.empty())

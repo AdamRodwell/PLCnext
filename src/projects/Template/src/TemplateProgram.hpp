@@ -1,8 +1,8 @@
 #pragma once
-#include "Arp/System/Core/Arp.h"
 #include "Arp/Plc/Commons/Esm/ProgramBase.hpp"
-#include "Arp/System/Commons/Logging.h"
 #include "Arp/System/Commons/Chrono/SystemTick.hpp"
+#include "Arp/System/Commons/Logging.h"
+#include "Arp/System/Core/Arp.h"
 #include "TemplateComponent.hpp"
 #include "Utils/Alert.hpp"
 #include "Utils/EdgeTrigger.hpp"
@@ -36,51 +36,40 @@ class TemplateProgramError : public Alert
     Arp::boolean warningExampleSensorFailed = false;
 
     // --- Errors ---
-    Arp::boolean errorExampleUnexpectedState = false; // TODO: rename / add real errors
-
-    // --- Aggregated sub-system faults ---
-    Arp::boolean hasErrorSubSystem   = false;
-    Arp::boolean hasWarningSubSystem = false;
+    Arp::boolean errorExampleUnexpectedMode = false; // TODO: rename / add real errors
 
     inline ErrorSeverity severity() const override
     {
-        if (errorExampleUnexpectedState || hasErrorSubSystem)
+        if (errorExampleUnexpectedMode)
             return ErrorSeverity::ERROR;
-        if (warningExampleTimeout || warningExampleSensorFailed || hasWarningSubSystem)
+        if (warningExampleTimeout || warningExampleSensorFailed)
             return ErrorSeverity::WARNING;
         return ErrorSeverity::NONE;
     }
 
     inline ErrorCode activeCode() const override
     {
-        if (errorExampleUnexpectedState)
+        if (errorExampleUnexpectedMode)
             return ErrorCodes::UNEXPECTED_STATE;
-        if (hasErrorSubSystem)
-            return ErrorCodes::SUBSYSTEM_FAULT;
         if (warningExampleTimeout)
             return ErrorCodes::TIMEOUT;
         if (warningExampleSensorFailed)
             return ErrorCodes::SENSOR_FAILURE;
-        if (hasWarningSubSystem)
-            return ErrorCodes::SUBSYSTEM_FAULT;
         return ErrorCodes::NONE;
     }
 
     inline void clear() override
     {
-        warningExampleTimeout       = false;
-        warningExampleSensorFailed  = false;
-        errorExampleUnexpectedState = false;
-        hasErrorSubSystem           = false;
-        hasWarningSubSystem         = false;
+        warningExampleTimeout      = false;
+        warningExampleSensorFailed = false;
+        errorExampleUnexpectedMode = false;
         // TODO: clear all flags
     }
 
-    inline void clearWarnings()
+    inline void ackWarnings()
     {
         warningExampleTimeout      = false;
         warningExampleSensorFailed = false;
-        hasWarningSubSystem        = false;
         // TODO: clear all warning-only flags
     }
 };
@@ -91,7 +80,7 @@ class TemplateProgramError : public Alert
 class TemplateProgram : public ProgramBase, private Loggable<TemplateProgram>
 {
   public:
-    enum class TemplateProgramState : Arp::uint8
+    enum class TemplateProgramMode : Arp::uint8
     {
         DISABLED     = 0x00,
         INITIALISING = 0x01,
@@ -104,35 +93,35 @@ class TemplateProgram : public ProgramBase, private Loggable<TemplateProgram>
     struct TemplateProgramConfig
     {
         // TODO: replace with real config fields
-        Arp::uint32  exampleTimeoutMs     = 5000;
+        Arp::uint32 exampleTimeoutMs     = 5000;
         Arp::float32 examplePositionMm   = 0.0f;
         Arp::boolean exampleIgnoreSensor = false;
     };
 
-    struct TemplateProgramManualCommand
+    struct TemplateProgramMan
     {
         // TODO: add manual control fields
         Arp::boolean activateOutput = false;
         Arp::float32 manualSetpoint = 0.0f;
     };
 
-    struct TemplateProgramCommand
+    struct TemplateProgramCmd
     {
         Arp::boolean disable         = false;
         Arp::boolean initialise      = false;
         Arp::boolean startCycle      = false; // TODO: rename / add operation commands
         Arp::boolean enterManualMode = false;
 
-        TemplateProgramManualCommand manual;
+        TemplateProgramMan manual;
     };
 
     struct TemplateProgramData
     {
         Arp::boolean isInitialisationDone = false;
         Arp::boolean isCycleDone          = false; // TODO: replace with real status flags
-        Arp::uint32  cycleCount           = 0;
+        Arp::uint32 cycleCount            = 0;
 
-        TemplateProgramState currentState = TemplateProgramState::DISABLED;
+        TemplateProgramMode currentState = TemplateProgramMode::DISABLED;
         TemplateProgramError error;
     };
 
@@ -176,7 +165,7 @@ class TemplateProgram : public ProgramBase, private Loggable<TemplateProgram>
     //#port
     //#attributes(Input|Opc)
     //#name(Command)
-    TemplateProgramCommand command_;
+    TemplateProgramCmd command_;
 
     // TODO: add input data ports from sub-systems
 
@@ -204,7 +193,8 @@ class TemplateProgram : public ProgramBase, private Loggable<TemplateProgram>
     // TODO: add private helper declarations
 };
 
-std::string toString(const TemplateProgramError &errorInstance);
+std::string
+toString(const TemplateProgramError &errorInstance);
 
 ///////////////////////////////////////////////////////////////////////////////
 // inline methods of class TemplateProgram

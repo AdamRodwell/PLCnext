@@ -22,22 +22,16 @@ TemplateProgram::Execute()
 {
     try
     {
-        // 1. Update edge detectors
         initialiseEdge_.update();
         startCycleEdge_.update();
         // TODO: call .update() on all edge detectors
-
-        // 2. Aggregate sub-system errors
-        CheckSubSystemErrors();
         systemTemplateError = data_.error;
 
-        // 3. Global disable / error guard
         if (command_.disable || (data_.error.hasError() && !command_.initialise))
         {
             data_.currentState = TemplateProgramMode::DISABLED;
         }
 
-        // 4. State machine
         switch (data_.currentState)
         {
         case TemplateProgramMode::DISABLED:

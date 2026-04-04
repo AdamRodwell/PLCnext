@@ -189,8 +189,6 @@ class TemplateProgram : public ProgramBase, private Loggable<TemplateProgram>
     Arp::boolean agentInitialisingDone_ = false;
 
   private:
-    void CheckSubSystemErrors();
-    // TODO: add private helper declarations
 };
 
 std::string

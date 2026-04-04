@@ -1,0 +1,7 @@
+@PACKAGE_INIT@
+
+include("@PACKAGE_LIB_INSTALL_DIR@/Valves-targets.cmake")
+
+set_and_check(Valves_INCLUDE_DIR "@PACKAGE_INCLUDE_INSTALL_DIR@")
+
+check_required_components(Valves)

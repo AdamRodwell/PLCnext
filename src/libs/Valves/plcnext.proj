@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProjectSettings xmlns="http://www.phoenixcontact.com/schema/cliproject">
+  <Target>AXCF2152,2024.0.9 LTS (24.0.9.199)</Target>
+  <Type>consumablelibrary</Type>
+  <Version>1.1</Version>
+  <Name>Valves</Name>
+</ProjectSettings>

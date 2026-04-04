@@ -24,7 +24,6 @@ constexpr ErrorCode TIMEOUT          = 0x0002;
 constexpr ErrorCode SENSOR_FAILURE   = 0x0003;
 constexpr ErrorCode COMM_FAILURE     = 0x0004;
 constexpr ErrorCode UNEXPECTED_STATE = 0x0005;
-constexpr ErrorCode SUBSYSTEM_FAULT  = 0x0006;
 // Application-specific: define 0x0100+ in your derived class
 } // namespace ErrorCodes
 
@@ -34,13 +33,13 @@ constexpr ErrorCode SUBSYSTEM_FAULT  = 0x0006;
 class Alert
 {
   public:
-    virtual ErrorSeverity severity()   const = 0;
-    virtual ErrorCode     activeCode() const = 0;
-    virtual void          clear()            = 0;
+    virtual ErrorSeverity severity() const = 0;
+    virtual ErrorCode activeCode() const   = 0;
+    virtual void clear()                   = 0;
 
-    bool      hasError()   const { return severity() >= ErrorSeverity::ERROR;   }
-    bool      hasWarning() const { return severity() >= ErrorSeverity::WARNING; }
-    ErrorCode status()     const { return activeCode(); }
+    bool hasError() const { return severity() >= ErrorSeverity::ERROR; }
+    bool hasWarning() const { return severity() >= ErrorSeverity::WARNING; }
+    ErrorCode status() const { return activeCode(); }
 
     virtual ~Alert() = default;
 };

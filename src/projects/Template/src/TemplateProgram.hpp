@@ -178,8 +178,8 @@ class TemplateProgram : public ProgramBase, private Loggable<TemplateProgram>
     Template::TemplateComponent &templateComponent;
 
     // Edge triggers — call .update() at top of Execute(), read .check() in state cases.
-    EdgeTrigger initialiseEdge_{command_.initialise, TriggerEdge::RISING};
-    EdgeTrigger startCycleEdge_{command_.startCycle, TriggerEdge::RISING, true};
+    EdgeTrigger initialiseEdge_{cmd_.initialise, TriggerEdge::RISING};
+    EdgeTrigger startCycleEdge_{cmd_.startCycle, TriggerEdge::RISING, true};
     // TODO: add EdgeTrigger fields for all command/sensor signals that gate transitions
 
     // IEC timers — call .update(condition) before the switch; read .Q() inside states.

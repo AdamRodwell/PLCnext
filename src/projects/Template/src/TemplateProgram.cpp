@@ -27,7 +27,7 @@ TemplateProgram::Execute()
         // TODO: call .update() on all edge detectors
         systemTemplateError = data_.error;
 
-        if (command_.disable || (data_.error.hasError() && !command_.initialise))
+        if (cmd_.disable || (data_.error.hasError() && !cmd_.initialise))
         {
             data_.currentState = TemplateProgramMode::DISABLED;
         }
@@ -43,7 +43,7 @@ TemplateProgram::Execute()
             agentInitialising_     = false;
             agentInitialisingDone_ = false;
 
-            if (command_.enterManualMode)
+            if (cmd_.enterManualMode)
             {
                 data_.currentState = TemplateProgramMode::MANUAL_MODE;
                 log.Info("{0}: Entering MANUAL_MODE from DISABLED", GetFullName());
@@ -89,7 +89,7 @@ TemplateProgram::Execute()
         case TemplateProgramMode::IDLE:
             data_.isCycleDone = false;
 
-            if (command_.enterManualMode)
+            if (cmd_.enterManualMode)
             {
                 data_.currentState = TemplateProgramMode::MANUAL_MODE;
                 log.Info("{0}: Entering MANUAL_MODE from IDLE", GetFullName());
@@ -105,7 +105,7 @@ TemplateProgram::Execute()
             break;
 
         case TemplateProgramMode::MANUAL_MODE:
-            if (!command_.enterManualMode)
+            if (!cmd_.enterManualMode)
             {
                 if (!data_.error.hasError())
                 {
@@ -120,7 +120,7 @@ TemplateProgram::Execute()
                     break;
                 }
             }
-            // TODO: drive outputs from command_.manual fields
+            // TODO: drive outputs from cmd_.manual fields
             break;
 
         case TemplateProgramMode::ERROR:
